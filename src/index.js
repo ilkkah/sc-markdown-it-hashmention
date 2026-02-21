@@ -1,7 +1,3 @@
-import hashtag from './hashtag';
-import mention from './mention';
+import cjsModule from './index.cjs';
 
-export default function(md, options) {
-  hashtag(md, options);
-  mention(md, options);
-};
+export default cjsModule;

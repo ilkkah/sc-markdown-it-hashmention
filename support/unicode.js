@@ -1,8 +1,3 @@
-import * as fs from 'fs';
-import * as unicode from '../src/unicode';
-const data = `
-// Automatically compiled with support/unicode.js
-module.exports = ${JSON.stringify(unicode)};
-`
+import cjsModule from './unicode.cjs';
 
-fs.writeFileSync('dist/unicode.js', data)
+export default cjsModule;

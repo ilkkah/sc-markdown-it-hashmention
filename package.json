@@ -17,7 +17,7 @@
     "url": "https://github.com/flowdock/markdown-it-flowdock/issues"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "scripts": {
     "prepublish": "babel --modules common src --out-dir dist && babel-node support/unicode.js",
     "test": "mocha --compilers js:babel/register"
@@ -32,5 +32,7 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "type": "module",
+  "module": "dist/index.js"
 }
