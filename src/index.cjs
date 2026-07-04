@@ -1,7 +1,7 @@
-import hashtag from './hashtag';
-import mention from './mention';
+const hashtag = require('./hashtag.cjs');
+const mention = require('./mention.cjs');
 
-export default function(md, options) {
+module.exports = function hashmention(md, options) {
   hashtag(md, options);
   mention(md, options);
 };

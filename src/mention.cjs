@@ -1,31 +1,40 @@
-import parser from './parser';
+const parser = require('./parser.cjs');
 
 function flowdockMention(tokens, idx) {
-  var tag = tokens[idx].content;
-  var markup = tokens[idx].markup;
-  const isUserMention = flowdockMention.options.users && flowdockMention.options.users.includes(tag);
-  const isGroupMention = flowdockMention.options.groups && flowdockMention.options.groups.includes(tag);
+  const tag = tokens[idx].content;
+  const markup = tokens[idx].markup;
+  const options = flowdockMention.options || {};
+  const users = options.users || [];
+  const groups = options.groups || [];
+  const isUserMention = users.includes(tag);
+  const isGroupMention = groups.includes(tag);
+
+  if (!flowdockMention.options) {
+    return '<a class="mention">' + markup + tag + '</a>';
+  }
 
   if (isUserMention) {
-    var result = '<a data-user="' + tag + '" class="mention mention-user"';
-    if (flowdockMention.options && flowdockMention.options.href) {
-      result += ' href="' + flowdockMention.options.href + encodeURIComponent(tag) + '"';
+    let result = '<a data-user="' + tag + '" class="mention mention-user"';
+    if (options.href) {
+      result += ' href="' + options.href + encodeURIComponent(tag) + '"';
     }
     result += '>' + markup + tag + '</a>';
     return result;
-  } else if (isGroupMention) {
-    var result = '<span data-group="' + tag + '" class="mention mention-group"';
+  }
+
+  if (isGroupMention) {
+    let result = '<span data-group="' + tag + '" class="mention mention-group"';
     result += '>' + markup + tag + '</span>';
     return result;
-  } else {
-    return markup + tag;
   }
+
+  return markup + tag;
 }
 
-export default function (md, options) {
-  const split = "@|＠";
-  const mention = parser(md, 'mention', new RegExp(split));
-  md.core.ruler.push('mention', mention);
+module.exports = function mention(md, options) {
+  const split = '@|＠';
+  const mentionParser = parser(md, 'mention', new RegExp(split));
+  md.core.ruler.push('mention', mentionParser);
   flowdockMention.options = options && options.mentions;
   md.renderer.rules.mention = flowdockMention;
 };

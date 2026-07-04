@@ -17,22 +17,19 @@
     "url": "https://github.com/flowdock/markdown-it-flowdock/issues"
   },
   "license": "MIT",
-  "main": "dist/index.cjs",
+  "main": "src/index.cjs",
   "scripts": {
-    "prepublish": "babel --modules common src --out-dir dist && babel-node support/unicode.js",
-    "test": "mocha --compilers js:babel/register"
+    "build": "node --check src/index.cjs && node --check src/hashtag.cjs && node --check src/mention.cjs && node --check src/parser.cjs",
+    "test": "mocha test/test.cjs"
   },
   "devDependencies": {
-    "babel": "^5.5.8",
-    "markdown-it": "^4.3.0",
-    "markdown-it-testgen": "^0.1.4",
-    "mocha": "^2.2.5",
-    "regenerate": "^1.2.1",
-    "unicode-7.0.0": "^0.1.5"
+    "markdown-it": "^14.3.0",
+    "markdown-it-testgen": "^0.1.6",
+    "mocha": "^11.7.6"
   },
   "directories": {
     "test": "test"
   },
   "type": "module",
-  "module": "dist/index.js"
+  "module": "src/index.js"
 }
